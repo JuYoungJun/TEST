@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jmybatis.UserMapper">
+	<!-- 해당 SQL을 메서드와 연결해줄 id = 메서드명 / resultType = 리턴 타입 parameterType = 매개변수 -->
+	<select id="getUser" resultType="jmybatis.UserDTO">
+		select * from user
+	</select>
+
+	<insert id="insertUser" parameterType="jmybatis.UserDTO">
+		insert into user
+		values(#{user_id}, #{user_pw},
+		#{name}, #{phone}, #{grade}, #{age})
+	</insert>
+
+	<delete id="deleteUser" parameterType="jmybatis.UserDTO">
+		delete from user where
+		user_id=#{user_id}
+	</delete>
+
+	<update id="updateUser" parameterType="jmybatis.UserDTO">
+		update user set
+		user_pw =
+		#{user_pw}, name = #{name}, phone = #{phone}, grade = #{grade},
+		age =
+		#{age} where user_id = #{user_id}
+	</update>
+
+	<select id="isEmpty" resultType="int">
+		select count(*) from user
+	</select>
+
+	<select id="isIdExist" parameterType="String"
+		resultType="boolean">
+		select exists(select 1 from user where user_id =
+		#{user_id})
+	</select>
+
+	<select id="getUserByIdAndPassword" parameterType="map"
+		resultType="jmybatis.UserDTO">
+		select * from user where user_id = #{user_id} and user_pw =
+		#{user_pw}
+	</select>
+
+</mapper>
